@@ -21,10 +21,7 @@ public class Test {
 //        log.setLevel(Level.WARNING);
 //        log.info("info2");
 //        log.warning("warn2");
-        Scanner scanner = new Scanner(System.in);
-        while (true){
-            int e = scanner.nextInt();
-            System.out.println(e);
-        }
+        String a = "添加评论";
+        System.out.println(a.replaceAll("[ 条评论添加]",""));
     }
 }

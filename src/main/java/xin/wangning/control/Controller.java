@@ -1,6 +1,7 @@
 package xin.wangning.control;
 
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -10,11 +11,26 @@ import java.util.Scanner;
 import java.util.Set;
 
 import com.alibaba.fastjson.JSON;
+import xin.wangning.dao.DataUtil;
+import xin.wangning.domain.Article;
+import xin.wangning.domain.MyData;
+import xin.wangning.domain.Question;
+import xin.wangning.parser.HTMLParser;
+import xin.wangning.url.UrlManager;
 
 public class Controller {
     static WebDriver driver = null;
     static Scanner scanner = null;
+
+    public static UrlManager urlManager;
+    public static HTMLParser htmlParser;
+    public static  MyData myData;
+
     public static void main(String[] args){
+        urlManager = new UrlManager();
+        htmlParser = new HTMLParser();
+        myData = new MyData();
+
         driver = getWebDriver();
         boolean exitFlag = true;
         while (exitFlag){
@@ -103,4 +119,41 @@ public class Controller {
         }
 
     }
+
+    public static void crawl(){
+        driver.get("https://www.zhihu.com/topic/19631819/newest");
+        mainScroll();
+        List<String> urls = htmlParser.getAllQuestionUrl(driver.getPageSource());
+        urlManager.addUrls(urls);
+        String url;
+        while (!(url=urlManager.getUrl()).equals("")){
+            driver.get(url);
+            if(url.contains("/p/")){
+                Article article = htmlParser.parseArticle(driver.getPageSource());
+                myData.addArticle(article);
+            }else {
+                Question question = htmlParser.parseQuestion(driver.getPageSource());
+                myData.addQuestion(question);
+            }
+        }
+        DataUtil.storage(myData);
+    }
+
+    //滚动使加载所有的问题
+    public static void mainScroll(){
+        int i=0;
+        while(i<30){
+            String js = "window.scrollTo(0,document.body.scrollHeight);";
+            ((JavascriptExecutor) driver).executeScript(js);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                i--;
+            }
+            i++;
+        }
+    }
+
+    
 }
