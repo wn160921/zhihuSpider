@@ -1,14 +1,45 @@
 package xin.wangning.domain;
 
+
+import java.util.Date;
 import java.util.List;
 
 public class Question {
+    int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     String url;
     String title;
     String content;
     int scanNum;
     int focusNum;
     List<Answer> answerList;
+
+    Date dateCreated;
+    Date dateModified;
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getDateModified() {
+        return dateModified;
+    }
+
+    public void setDateModified(Date dateModified) {
+        this.dateModified = dateModified;
+    }
 
     public String getUrl() {
         return url;

@@ -21,7 +21,7 @@ public class Test {
 //        log.setLevel(Level.WARNING);
 //        log.info("info2");
 //        log.warning("warn2");
-        String a = "添加评论";
-        System.out.println(a.replaceAll("[ 条评论添加]",""));
+        String a = "1K";
+        System.out.println(a.replaceAll("\\.","").replaceAll("K","000"));
     }
 }

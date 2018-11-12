@@ -11,6 +11,15 @@ public class Article {
     String content;
     int discussNum;
     List<ArticleDiscuss> articleDiscussList;
+    String dateModified;
+
+    public String getDateModified() {
+        return dateModified;
+    }
+
+    public void setDateModified(String dataModified) {
+        this.dateModified = dataModified;
+    }
 
     public String getTitle() {
         return title;

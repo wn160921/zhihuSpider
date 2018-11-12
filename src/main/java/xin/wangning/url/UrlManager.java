@@ -14,6 +14,7 @@ public class UrlManager {
     public void addUrls(List<String> urls){
         for(String url:urls){
             if(!newUrl.contains(url)&&!oldUrl.contains(url)){
+                System.out.println("添加url:"+url);
                 newUrl.add(url);
             }
         }

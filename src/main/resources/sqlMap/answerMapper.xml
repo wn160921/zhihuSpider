@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.wangning.mapper.AnswerMapper">
+
+    <select id="selectById" parameterType="int" resultType="xin.wangning.domain.Answer">
+        select * from answer where testid=#{id}
+    </select>
+
+    <select id="selectByQuestionId" parameterType="int" resultType="xin.wangning.domain.Answer">
+        select * from answer where questionid=#{questionid}
+    </select>
+
+    <select id="selectAll" resultType="xin.wangning.domain.Answer">
+        select * from answer
+    </select>
+
+    <insert id="insertAnswer" parameterType="xin.wangning.domain.Answer">
+        <selectKey keyProperty="id" order="AFTER" resultType="int">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into answer(author,authorurl,agreeNum,answerContent,questionId)values(#{author},#{authorUrl},#{agreeNum},#{answerContent},#{questionID})
+    </insert>
+
+</mapper>
