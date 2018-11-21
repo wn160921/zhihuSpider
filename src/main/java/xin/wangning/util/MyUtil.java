@@ -4,6 +4,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.Test;
 import xin.wangning.domain.Answer;
 import xin.wangning.domain.Question;
 import xin.wangning.mapper.AnswerMapper;
@@ -40,6 +41,14 @@ public class MyUtil {
             answer.setQuestionID(question.getId());
             answerMapper.insertAnswer(answer);
         }
+        sqlSession.commit();
+        sqlSession.close();
+    }
+    @Test
+    public void testDataTable() {
+        SqlSession sqlSession = getSqlSessionFactory().openSession();
+        QuestionMapper questionMapper = sqlSession.getMapper(QuestionMapper.class);
+        questionMapper.selectAll();
         sqlSession.commit();
         sqlSession.close();
     }

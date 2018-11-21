@@ -38,7 +38,7 @@ public class HTMLParser {
         Element dateCreateElem = doc.selectFirst("meta[itemprop$=dateCreated]");
         String dc = dateCreateElem.attr("content").substring(0,10);
         try {
-            question.setDateCreated(dateFormat1.parse(dc));
+            question.setDateCreate(dateFormat1.parse(dc));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -46,7 +46,7 @@ public class HTMLParser {
         Element dateModifyElem = doc.selectFirst("meta[itemprop$=dateModified]");
         String dm = dateModifyElem.attr("content").substring(0,10);
         try {
-            question.setDateModified(dateFormat1.parse(dm));
+            question.setDateModifie(dateFormat1.parse(dm));
         } catch (ParseException e) {
             e.printStackTrace();
         }

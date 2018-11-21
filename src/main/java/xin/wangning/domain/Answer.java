@@ -3,6 +3,11 @@ package xin.wangning.domain;
 public class Answer {
     int id;
     int questionID;
+    String author;
+    String authorUrl;
+    int agreeNum;
+    String answerContent;
+    int discussNum;
 
     public int getId() {
         return id;
@@ -27,13 +32,6 @@ public class Answer {
     public void setAuthor(String author) {
         this.author = author;
     }
-
-    String author;
-    String authorUrl;
-    int agreeNum;
-
-    String answerContent;
-    int discussNum;
 
     public String getAuthorUrl() {
         return authorUrl;

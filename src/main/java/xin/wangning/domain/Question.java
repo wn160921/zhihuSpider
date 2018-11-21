@@ -6,6 +6,30 @@ import java.util.List;
 
 public class Question {
     int id;
+    String url;
+    String title;
+    String content;
+    int scanNum;
+    int focusNum;
+    List<Answer> answerList;
+    Date dateCreate;
+    Date dateModifie;
+
+    public Date getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
+    }
+
+    public Date getDateModifie() {
+        return dateModifie;
+    }
+
+    public void setDateModifie(Date dateModifie) {
+        this.dateModifie = dateModifie;
+    }
 
     public int getId() {
         return id;
@@ -13,32 +37,6 @@ public class Question {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    String url;
-    String title;
-    String content;
-    int scanNum;
-    int focusNum;
-    List<Answer> answerList;
-
-    Date dateCreated;
-    Date dateModified;
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Date getDateModified() {
-        return dateModified;
-    }
-
-    public void setDateModified(Date dateModified) {
-        this.dateModified = dateModified;
     }
 
     public String getUrl() {

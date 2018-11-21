@@ -52,7 +52,7 @@ public class LuceneTest {
             Field title = new TextField("title",q.getTitle(),Field.Store.YES);
             Field url = new TextField("url",q.getUrl(),Field.Store.YES);
             Field scanNum = new TextField("csanNum",String.valueOf(q.getScanNum()),Field.Store.YES);
-            Field date = new TextField("date",String.valueOf(q.getDateCreated()),Field.Store.YES);
+            Field date = new TextField("date",String.valueOf(q.getDateModifie()),Field.Store.YES);
             document.add(id);
             document.add(title);
             document.add(url);

@@ -1,18 +1,14 @@
 package xin.wangning.control;
 
-import org.jsoup.nodes.Element;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.*;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
 import com.alibaba.fastjson.JSON;
-import xin.wangning.dao.DataUtil;
-import xin.wangning.domain.Article;
 import xin.wangning.domain.MyData;
 import xin.wangning.domain.Question;
 import xin.wangning.parser.HTMLParser;
@@ -128,8 +124,8 @@ public class Controller {
     }
 
     public static void crawl() {
-        driver.get("https://www.zhihu.com/topic/19631819/hot");
-//        driver.get("https://www.zhihu.com/topic/19550901/hot");
+//        driver.get("https://www.zhihu.com/topic/19631819/hot");
+        driver.get("https://www.zhihu.com/topic/19550901/hot");
         getAllQuestionShow(20);
         List<String> urls = htmlParser.getAllQuestionUrl(driver.getPageSource());
         urlManager.addUrls(urls);
