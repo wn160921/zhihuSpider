@@ -12,7 +12,6 @@ import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.BytesRef;
 import org.junit.Test;
 import xin.wangning.domain.Answer;
 import xin.wangning.domain.Question;
@@ -52,7 +51,7 @@ public class LuceneTest {
             Field title = new TextField("title",q.getTitle(),Field.Store.YES);
             Field url = new TextField("url",q.getUrl(),Field.Store.YES);
             Field scanNum = new TextField("csanNum",String.valueOf(q.getScanNum()),Field.Store.YES);
-            Field date = new TextField("date",String.valueOf(q.getDateModifie()),Field.Store.YES);
+            Field date = new TextField("date",String.valueOf(q.getDateModify()),Field.Store.YES);
             document.add(id);
             document.add(title);
             document.add(url);
@@ -88,7 +87,7 @@ public class LuceneTest {
                 Field question = new TextField("question",q.getTitle(),Field.Store.YES);
                 Field author = new StringField("anthor",answer.getAuthor(),Field.Store.YES);
                 Field authorUrl = new StoredField("authorUrl",answer.getAuthorUrl());
-                Field content = new TextField("content",answer.getAnswerContent(),Field.Store.YES);
+                Field content = new TextField("content",answer.getContent(),Field.Store.YES);
                 Field agreeNum = new LongPoint("agreeNum",answer.getAgreeNum());
                 Field agreeNumStore = new StoredField("agreeNumStored",answer.getAgreeNum());
                 document.add(id);

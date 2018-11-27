@@ -5,6 +5,8 @@ import xin.wangning.domain.Question;
 import xin.wangning.mapper.AnswerMapper;
 import xin.wangning.mapper.QuestionMapper;
 
+import java.util.List;
+
 import static xin.wangning.util.MyUtil.getSqlSessionFactory;
 
 public class DBTest {
@@ -13,7 +15,10 @@ public class DBTest {
     public void testDataTable() {
         SqlSession sqlSession = getSqlSessionFactory().openSession();
         QuestionMapper questionMapper = sqlSession.getMapper(QuestionMapper.class);
-        questionMapper.selectAll();
+        List<Question> questionList = questionMapper.selectAll();
+        for (Question question:questionList){
+            System.out.println(question.getTitle());
+        }
         sqlSession.commit();
         sqlSession.close();
     }

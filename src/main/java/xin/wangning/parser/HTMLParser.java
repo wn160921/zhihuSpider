@@ -46,7 +46,7 @@ public class HTMLParser {
         Element dateModifyElem = doc.selectFirst("meta[itemprop$=dateModified]");
         String dm = dateModifyElem.attr("content").substring(0,10);
         try {
-            question.setDateModifie(dateFormat1.parse(dm));
+            question.setDateModify(dateFormat1.parse(dm));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -90,7 +90,7 @@ public class HTMLParser {
 
             Element contentElem = element.getElementsByClass("RichText ztext CopyrightRichText-richText").first();
             String content = contentElem.text();
-            answer.setAnswerContent(content);
+            answer.setContent(content);
 
             Element discussElem = element.getElementsByClass("Button ContentItem-action Button--plain Button--withIcon Button--withLabel").first();
             String discussText = discussElem.text().trim().replaceAll("[ 条评论添加]","");

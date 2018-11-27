@@ -13,7 +13,7 @@ public class Question {
     int focusNum;
     List<Answer> answerList;
     Date dateCreate;
-    Date dateModifie;
+    Date dateModify;
 
     public Date getDateCreate() {
         return dateCreate;
@@ -23,12 +23,12 @@ public class Question {
         this.dateCreate = dateCreate;
     }
 
-    public Date getDateModifie() {
-        return dateModifie;
+    public Date getDateModify() {
+        return dateModify;
     }
 
-    public void setDateModifie(Date dateModifie) {
-        this.dateModifie = dateModifie;
+    public void setDateModify(Date dateModify) {
+        this.dateModify = dateModify;
     }
 
     public int getId() {

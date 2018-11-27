@@ -6,8 +6,16 @@ public class Answer {
     String author;
     String authorUrl;
     int agreeNum;
-    String answerContent;
+    String content;
     int discussNum;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public int getId() {
         return id;
@@ -47,14 +55,6 @@ public class Answer {
 
     public void setAgreeNum(int agreeNum) {
         this.agreeNum = agreeNum;
-    }
-
-    public String getAnswerContent() {
-        return answerContent;
-    }
-
-    public void setAnswerContent(String answerContent) {
-        this.answerContent = answerContent;
     }
 
     public int getDiscussNum() {

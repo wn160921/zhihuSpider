@@ -20,7 +20,7 @@
         <selectKey keyProperty="id" order="AFTER" resultType="int">
             select LAST_INSERT_ID()
         </selectKey>
-        insert into answer(author,authorurl,agreeNum,answerContent,questionId)values(#{author},#{authorUrl},#{agreeNum},#{answerContent},#{questionID})
+        insert into answer(author,authorurl,agreeNum,content,questionId)values(#{author},#{authorUrl},#{agreeNum},#{content},#{questionID})
     </insert>
 
 </mapper>

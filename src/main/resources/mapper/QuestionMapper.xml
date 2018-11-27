@@ -5,11 +5,11 @@
 <mapper namespace="xin.wangning.mapper.QuestionMapper">
 
     <select id="selectById" parameterType="int" resultType="xin.wangning.domain.Question">
-        select * from question where id=#{id}
+        select * from question_tb where id=#{id}
     </select>
 
     <select id="selectAll" resultType="xin.wangning.domain.Question">
-        select * from question
+        select * from question_tb
     </select>
 
     <insert id="insertQuestion" parameterType="xin.wangning.domain.Question">
