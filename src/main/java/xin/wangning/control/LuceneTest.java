@@ -122,7 +122,6 @@ public class LuceneTest {
         IndexReader reader = DirectoryReader.open(directory);
         IndexSearcher searcher = new IndexSearcher(reader);
         TopDocs topDocs = searcher.search(query,5);
-
         System.out.println("lenth:"+topDocs.totalHits);
         ScoreDoc[] scoreDocs = topDocs.scoreDocs;
         for(ScoreDoc d:scoreDocs){

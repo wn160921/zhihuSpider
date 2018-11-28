@@ -204,7 +204,7 @@ public class HTMLParser {
         reader.close();
         Question question = parseQuestion(html_doc);
 
-        String resource = "sqlMapConfig.xml";
+        String resource = "mybatis-config.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession sqlSession = sessionFactory.openSession();

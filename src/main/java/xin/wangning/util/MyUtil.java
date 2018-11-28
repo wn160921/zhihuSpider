@@ -4,10 +4,13 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.junit.Test;
 import xin.wangning.domain.Answer;
+import xin.wangning.domain.Article;
+import xin.wangning.domain.ArticleDiscuss;
 import xin.wangning.domain.Question;
 import xin.wangning.mapper.AnswerMapper;
+import xin.wangning.mapper.ArticleDiscussMapper;
+import xin.wangning.mapper.ArticleMapper;
 import xin.wangning.mapper.QuestionMapper;
 
 import java.io.IOException;
@@ -20,7 +23,7 @@ public class MyUtil {
         if(sqlSessionFactory!=null){
             return sqlSessionFactory;
         }else {
-            String resource = "sqlMapConfig.xml";
+            String resource = "mybatis-config.xml";
             InputStream inputStream = null;
             try {
                 inputStream = Resources.getResourceAsStream(resource);
@@ -44,11 +47,16 @@ public class MyUtil {
         sqlSession.commit();
         sqlSession.close();
     }
-    @Test
-    public void testDataTable() {
+
+    public static void dumpArticle(Article article){
         SqlSession sqlSession = getSqlSessionFactory().openSession();
-        QuestionMapper questionMapper = sqlSession.getMapper(QuestionMapper.class);
-        questionMapper.selectAll();
+        ArticleMapper articleMapper = sqlSession.getMapper(ArticleMapper.class);
+        articleMapper.insertArticle(article);
+        ArticleDiscussMapper articleDiscussMapper = sqlSession.getMapper(ArticleDiscussMapper.class);
+        for(ArticleDiscuss discuss:article.getArticleDiscussList()){
+            discuss.setArticleId(article.getId());
+            articleDiscussMapper.insertArticleDiscuss(discuss);
+        }
         sqlSession.commit();
         sqlSession.close();
     }

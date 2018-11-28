@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.wangning.mapper.ArticleMapper">
+    <select id="selectAll" resultType="xin.wangning.domain.Article">
+        select * from article_tb
+    </select>
+
+    <insert id="insertArticle" parameterType="xin.wangning.domain.Article" useGeneratedKeys="true" keyProperty="id">
+        insert into article_tb(title,article_url,author,author_url,agree_num,content,discuss_num,date_modify)values(#{title},#{articleUrl},#{author},#{authorUrl},#{agreeNum},#{content},#{discussNum},#{dateModify})
+    </insert>
+</mapper>

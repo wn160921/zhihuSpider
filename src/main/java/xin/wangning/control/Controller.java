@@ -127,22 +127,20 @@ public class Controller {
     public static void crawl() {
 //        driver.get("https://www.zhihu.com/topic/19631819/hot");
         driver.get("https://www.zhihu.com/topic/19550901/hot");
-        getAllQuestionShow(200);
+        getAllQuestionShow(20);
         List<String> urls = htmlParser.getAllQuestionUrl(driver.getPageSource());
         urlManager.addUrls(urls);
         String url;
         while (!(url = urlManager.getUrl()).equals("")) {
             driver.get(url);
             if (url.contains("/p/")) {
-
                 Article article = htmlParser.parseArticle(driver.getPageSource());
                 article.setArticleUrl(url);
-                System.out.println(JSON.toJSONString(article));
-                myData.addArticle(article);
+                MyUtil.dumpArticle(article);
             } else {
                 getAllAnswerShow();
                 Question question = htmlParser.parseQuestion(driver.getPageSource());
-                System.out.println(JSON.toJSONString(question));
+
                 question.setUrl(url);
                 MyUtil.dumpQuestion(question);
 //                myData.addQuestion(question);

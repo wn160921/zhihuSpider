@@ -20,7 +20,6 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mapper/QuestionMapper.xml"></mapper>
-        <mapper resource="mapper/AnswerMapper.xml"></mapper>
+        <package name="xin.wangning.mapper"/>
     </mappers>
 </configuration>
