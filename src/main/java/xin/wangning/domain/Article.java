@@ -3,22 +3,23 @@ package xin.wangning.domain;
 import java.util.List;
 
 public class Article {
+    Integer id;
     String title;
-    String Articleurl;
-    String auther;
-    String autherUrl;
+    String articleUrl;
+    String author;
+    String authorUrl;
     int agreeNum;
     String content;
     int discussNum;
     List<ArticleDiscuss> articleDiscussList;
-    String dateModified;
+    String dateModify;
 
-    public String getDateModified() {
-        return dateModified;
+    public Integer getId() {
+        return id;
     }
 
-    public void setDateModified(String dataModified) {
-        this.dateModified = dataModified;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -29,28 +30,28 @@ public class Article {
         this.title = title;
     }
 
-    public String getArticleurl() {
-        return Articleurl;
+    public String getArticleUrl() {
+        return articleUrl;
     }
 
-    public void setArticleurl(String articleurl) {
-        Articleurl = articleurl;
+    public void setArticleUrl(String articleUrl) {
+        this.articleUrl = articleUrl;
     }
 
-    public String getAuther() {
-        return auther;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setAuther(String auther) {
-        this.auther = auther;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public String getAutherUrl() {
-        return autherUrl;
+    public String getAuthorUrl() {
+        return authorUrl;
     }
 
-    public void setAutherUrl(String autherUrl) {
-        this.autherUrl = autherUrl;
+    public void setAuthorUrl(String authorUrl) {
+        this.authorUrl = authorUrl;
     }
 
     public int getAgreeNum() {
@@ -83,5 +84,13 @@ public class Article {
 
     public void setArticleDiscussList(List<ArticleDiscuss> articleDiscussList) {
         this.articleDiscussList = articleDiscussList;
+    }
+
+    public String getDateModify() {
+        return dateModify;
+    }
+
+    public void setDateModify(String dateModify) {
+        this.dateModify = dateModify;
     }
 }

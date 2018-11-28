@@ -115,12 +115,12 @@ public class HTMLParser {
         Element authorInfoElem = doc.getElementsByClass("AuthorInfo").first();
         String authorName = authorInfoElem.selectFirst("meta[itemprop$=name]").attr("content");
         String authorUrl = authorInfoElem.selectFirst("meta[itemprop$=url]").attr("content");
-        article.setAuther(authorName);
-        article.setAutherUrl(authorUrl);
+        article.setAuthor(authorName);
+        article.setAuthorUrl(authorUrl);
 
         Element dateModifyElem = doc.selectFirst(".ContentItem-time");
         String dm = dateModifyElem.text();
-        article.setDateModified(dm);
+        article.setDateModify(dm);
 
         Element contentElem = doc.getElementsByClass("RichText ztext Post-RichText").first();
         String content = contentElem.text();
@@ -163,9 +163,9 @@ public class HTMLParser {
             }
             String discussAgree = discussAgreeElem.text().replaceAll("赞","");
             if("".equals(discussAgree)){
-                articleDiscuss.setAgree(0);
+                articleDiscuss.setAgreeNum(0);
             }else {
-                articleDiscuss.setAgree(Integer.parseInt(discussAgree));
+                articleDiscuss.setAgreeNum(Integer.parseInt(discussAgree));
             }
             articleDiscussList.add(articleDiscuss);
 

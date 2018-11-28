@@ -5,22 +5,19 @@
 <mapper namespace="xin.wangning.mapper.AnswerMapper">
 
     <select id="selectById" parameterType="int" resultType="xin.wangning.domain.Answer">
-        select * from answer where testid=#{id}
+        select * from answer_tb where testid=#{id}
     </select>
 
     <select id="selectByQuestionId" parameterType="int" resultType="xin.wangning.domain.Answer">
-        select * from answer where questionid=#{questionid}
+        select * from answer_tb where questionid=#{questionid}
     </select>
 
     <select id="selectAll" resultType="xin.wangning.domain.Answer">
-        select * from answer
+        select * from answer_tb
     </select>
 
-    <insert id="insertAnswer" parameterType="xin.wangning.domain.Answer">
-        <selectKey keyProperty="id" order="AFTER" resultType="int">
-            select LAST_INSERT_ID()
-        </selectKey>
-        insert into answer(author,authorurl,agreeNum,content,questionId)values(#{author},#{authorUrl},#{agreeNum},#{content},#{questionID})
+    <insert id="insertAnswer" parameterType="xin.wangning.domain.Answer" useGeneratedKeys="true">
+        insert into answer_tb(author,author_url,agree_num,content,question_id,discuss_num)values(#{author},#{authorUrl},#{agreeNum},#{content},#{questionID},#{discussNum})
     </insert>
 
 </mapper>

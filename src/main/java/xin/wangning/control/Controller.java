@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 import com.alibaba.fastjson.JSON;
+import xin.wangning.domain.Article;
 import xin.wangning.domain.MyData;
 import xin.wangning.domain.Question;
 import xin.wangning.parser.HTMLParser;
@@ -126,22 +127,18 @@ public class Controller {
     public static void crawl() {
 //        driver.get("https://www.zhihu.com/topic/19631819/hot");
         driver.get("https://www.zhihu.com/topic/19550901/hot");
-        getAllQuestionShow(20);
+        getAllQuestionShow(200);
         List<String> urls = htmlParser.getAllQuestionUrl(driver.getPageSource());
         urlManager.addUrls(urls);
         String url;
         while (!(url = urlManager.getUrl()).equals("")) {
-            if (url.contains("/p/")) {
-                continue;
-            }
             driver.get(url);
             if (url.contains("/p/")) {
-                //暂不爬取
-//                mainScroll(".List-item");
-//                Article article = htmlParser.parseArticle(driver.getPageSource());
-//                article.setArticleurl(url);
-//                System.out.println(JSON.toJSONString(article));
-//                myData.addArticle(article);
+
+                Article article = htmlParser.parseArticle(driver.getPageSource());
+                article.setArticleUrl(url);
+                System.out.println(JSON.toJSONString(article));
+                myData.addArticle(article);
             } else {
                 getAllAnswerShow();
                 Question question = htmlParser.parseQuestion(driver.getPageSource());

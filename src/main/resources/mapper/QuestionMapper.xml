@@ -12,11 +12,8 @@
         select * from question_tb
     </select>
 
-    <insert id="insertQuestion" parameterType="xin.wangning.domain.Question">
-        <selectKey keyProperty="id" order="AFTER" resultType="int">
-            select LAST_INSERT_ID()
-        </selectKey>
-        insert into question(title,url,scannum,focusnum,datecreated,datemodified)values(#{title},#{url},#{scanNum},#{focusNum},#{dateCreated},#{dateModified})
+    <insert id="insertQuestion" parameterType="xin.wangning.domain.Question" useGeneratedKeys="true" keyProperty="id">
+        insert into question_tb(title,url,content,scan_num,focus_num,date_create,date_modify)values(#{title},#{url},#{content},#{scanNum},#{focusNum},#{dateCreate},#{dateModify})
     </insert>
 
 </mapper>
