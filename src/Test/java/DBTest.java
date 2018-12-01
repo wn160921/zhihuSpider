@@ -2,6 +2,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import xin.wangning.domain.Question;
 import xin.wangning.mapper.QuestionMapper;
+import xin.wangning.util.MyUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -29,5 +30,11 @@ public class DBTest {
 //        questionMapper.insertQuestion(question);
         sqlSession.commit();
         sqlSession.close();
+    }
+
+    @Test
+    public void testArticleTable(){
+//        SqlSession sqlSession = MyUtil.getSqlSessionFactory().openSession();
+
     }
 }

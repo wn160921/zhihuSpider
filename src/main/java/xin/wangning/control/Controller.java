@@ -12,24 +12,26 @@ import com.alibaba.fastjson.JSON;
 import xin.wangning.domain.Article;
 import xin.wangning.domain.MyData;
 import xin.wangning.domain.Question;
+import xin.wangning.parser.DriverParser;
 import xin.wangning.parser.HTMLParser;
 import xin.wangning.url.UrlManager;
 import xin.wangning.util.MyUtil;
 
 public class Controller {
-    static WebDriver driver = null;
+    static ChromeDriver driver = null;
     static Scanner scanner = null;
 
     public static UrlManager urlManager;
     public static HTMLParser htmlParser;
+    public static DriverParser driverParser;
     public static MyData myData;
 
     public static void main(String[] args) {
         urlManager = new UrlManager();
         htmlParser = new HTMLParser();
-//        myData = new MyData();
 
         driver = getWebDriver();
+        driverParser = new DriverParser(driver);
         boolean exitFlag = true;
         while (exitFlag) {
             print("输入操作");
@@ -66,8 +68,8 @@ public class Controller {
     }
 
     //仅供初始化用
-    public static WebDriver getWebDriver() {
-        WebDriver webDriver = new ChromeDriver();
+    public static ChromeDriver getWebDriver() {
+        ChromeDriver webDriver = new ChromeDriver();
         webDriver.get("https://www.baidu.com");
         return webDriver;
     }
@@ -125,10 +127,10 @@ public class Controller {
     }
 
     public static void crawl() {
-//        driver.get("https://www.zhihu.com/topic/19631819/hot");
-        driver.get("https://www.zhihu.com/topic/19550901/hot");
-        getAllQuestionShow(20);
-        List<String> urls = htmlParser.getAllQuestionUrl(driver.getPageSource());
+        driver.get("https://www.zhihu.com/topic/19631819/hot");
+//        driver.get("https://www.zhihu.com/topic/19550901/hot");
+//        getAllQuestionShow(20);
+        List<String> urls = driverParser.getAllQuestionAndArticleUrl(10);
         urlManager.addUrls(urls);
         String url;
         while (!(url = urlManager.getUrl()).equals("")) {

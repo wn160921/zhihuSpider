@@ -15,6 +15,8 @@ import xin.wangning.mapper.QuestionMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MyUtil {
     private static SqlSessionFactory sqlSessionFactory = null;
@@ -59,5 +61,16 @@ public class MyUtil {
         }
         sqlSession.commit();
         sqlSession.close();
+    }
+
+    public static String subDateStr(String str){
+        Pattern pattern = Pattern.compile("[0-9]{4}[-][0-9]{1,2}[-][0-9]{1,2}");
+        Matcher matcher = pattern.matcher(str);
+        String dateStr = null;
+        if(matcher.find()){
+            dateStr = matcher.group(0);
+        }
+        return dateStr;
+
     }
 }

@@ -14,6 +14,7 @@ import xin.wangning.domain.Article;
 import xin.wangning.domain.ArticleDiscuss;
 import xin.wangning.domain.Question;
 import xin.wangning.mapper.QuestionMapper;
+import xin.wangning.util.MyUtil;
 
 
 import java.io.BufferedReader;
@@ -119,8 +120,14 @@ public class HTMLParser {
         article.setAuthorUrl(authorUrl);
 
         Element dateModifyElem = doc.selectFirst(".ContentItem-time");
+
+        DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
         String dm = dateModifyElem.text();
-        article.setDateModify(dm);
+        try {
+            article.setDateModify(dateFormat1.parse(MyUtil.subDateStr(dm)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         Element contentElem = doc.getElementsByClass("RichText ztext Post-RichText").first();
         String content = contentElem.text();
@@ -142,7 +149,7 @@ public class HTMLParser {
             article.setDiscussNum(Integer.parseInt(discussText));
         }
         List<ArticleDiscuss> articleDiscussList = new LinkedList<ArticleDiscuss>();
-        Elements discussElems = doc.getElementsByClass("CommentItem");
+        Elements discussElems = doc.getElementsByClass("NestComment");
         for(Element elem:discussElems){
             ArticleDiscuss articleDiscuss = new ArticleDiscuss();
             Element userLinkElem = elem.getElementsByClass("UserLink-link").first();
@@ -213,8 +220,7 @@ public class HTMLParser {
         questionMapper.insertQuestion(question);
         sqlSession.commit();
         sqlSession.close();
-
-        System.out.println(JSON.toJSONString(question));
+//        System.out.println(JSON.toJSONString(question));
     }
 
     @Test
@@ -229,6 +235,6 @@ public class HTMLParser {
         String html_doc = builder.toString();
         reader.close();
         Article article = parseArticle(html_doc);
-        System.out.println(JSON.toJSONString(article));
+//        System.out.println(JSON.toJSONString(article));
     }
 }

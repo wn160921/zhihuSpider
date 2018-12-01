@@ -1,5 +1,6 @@
 package xin.wangning.domain;
 
+import java.util.Date;
 import java.util.List;
 
 public class Article {
@@ -12,7 +13,7 @@ public class Article {
     String content;
     int discussNum;
     List<ArticleDiscuss> articleDiscussList;
-    String dateModify;
+    Date dateModify;
 
     public Integer getId() {
         return id;
@@ -86,11 +87,11 @@ public class Article {
         this.articleDiscussList = articleDiscussList;
     }
 
-    public String getDateModify() {
+    public Date getDateModify() {
         return dateModify;
     }
 
-    public void setDateModify(String dateModify) {
+    public void setDateModify(Date dateModify) {
         this.dateModify = dateModify;
     }
 }
