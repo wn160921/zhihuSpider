@@ -1,13 +1,24 @@
 package xin.wangning.domain;
 
+import java.util.List;
+
 public class Answer {
-    int id;
-    int questionID;
+    Long id;
+    Long questionID;
     String author;
     String authorUrl;
     int agreeNum;
     String content;
     int discussNum;
+    List<User> agreeUser;
+
+    public List<User> getAgreeUser() {
+        return agreeUser;
+    }
+
+    public void setAgreeUser(List<User> agreeUser) {
+        this.agreeUser = agreeUser;
+    }
 
     public String getContent() {
         return content;
@@ -17,19 +28,19 @@ public class Answer {
         this.content = content;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getQuestionID() {
+    public Long getQuestionID() {
         return questionID;
     }
 
-    public void setQuestionID(int questionID) {
+    public void setQuestionID(Long questionID) {
         this.questionID = questionID;
     }
 

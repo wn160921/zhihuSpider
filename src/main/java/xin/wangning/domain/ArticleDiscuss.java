@@ -1,26 +1,26 @@
 package xin.wangning.domain;
 
 public class ArticleDiscuss {
-    Integer id;
-    Integer articleId;
+    Long id;
+    Long articleId;
     String autherName;
     String authorUrl;
     String content;
     int agreeNum;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getArticleId() {
+    public Long getArticleId() {
         return articleId;
     }
 
-    public void setArticleId(Integer articleId) {
+    public void setArticleId(Long articleId) {
         this.articleId = articleId;
     }
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.wangning.mapper.AnswerAgreeMapper">
+
+    <select id="selectAll" resultType="xin.wangning.domain.AnswerAgree">
+        select * from answer_discuss_tb
+    </select>
+
+    <insert id="insert" parameterType="xin.wangning.domain.AnswerAgree">
+        insert into answer_discuss_tb(answer_id,user_id) values (#{answerId},#{userId})
+    </insert>
+
+</mapper>

@@ -31,7 +31,7 @@ public class LuceneTest {
         AnswerMapper answerMapper = sqlSession.getMapper(AnswerMapper.class);
         List<Question> questionList = questionMapper.selectAll();
         for(Question q:questionList){
-            List<Answer> answerList = answerMapper.selectByQuestionId(q.getId());
+            List<Answer> answerList = answerMapper.selectByQuestionId(q.getId().intValue());
             q.setAnswerList(answerList);
         }
         sqlSession.commit();

@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Question {
-    int id;
+    Long id;
     String url;
     String title;
     String content;
@@ -31,11 +31,11 @@ public class Question {
         this.dateModify = dateModify;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

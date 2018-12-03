@@ -134,15 +134,16 @@ public class Controller {
         urlManager.addUrls(urls);
         String url;
         while (!(url = urlManager.getUrl()).equals("")) {
-            driver.get(url);
             if (url.contains("/p/")) {
-                Article article = htmlParser.parseArticle(driver.getPageSource());
-                article.setArticleUrl(url);
-                MyUtil.dumpArticle(article);
+//                driver.get(url);
+//                Article article = htmlParser.parseArticle(driver.getPageSource());
+//                article.setArticleUrl(url);
+//                MyUtil.dumpArticle(article);
             } else {
-                getAllAnswerShow();
-                Question question = htmlParser.parseQuestion(driver.getPageSource());
-
+                driver.get(url);
+//                getAllAnswerShow();
+//                Question question = htmlParser.parseQuestion(driver.getPageSource());
+                Question question = driverParser.parserQuestion();
                 question.setUrl(url);
                 MyUtil.dumpQuestion(question);
 //                myData.addQuestion(question);
@@ -176,7 +177,7 @@ public class Controller {
 //            allAnswerElem.click();
             Thread.sleep(1000);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         while (true) {
             String jsDown = "window.scrollTo(0,document.body.scrollHeight);";

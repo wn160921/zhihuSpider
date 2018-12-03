@@ -4,17 +4,12 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import xin.wangning.domain.Answer;
-import xin.wangning.domain.Article;
-import xin.wangning.domain.ArticleDiscuss;
-import xin.wangning.domain.Question;
-import xin.wangning.mapper.AnswerMapper;
-import xin.wangning.mapper.ArticleDiscussMapper;
-import xin.wangning.mapper.ArticleMapper;
-import xin.wangning.mapper.QuestionMapper;
+import xin.wangning.domain.*;
+import xin.wangning.mapper.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,9 +37,18 @@ public class MyUtil {
         QuestionMapper questionMapper = sqlSession.getMapper(QuestionMapper.class);
         questionMapper.insertQuestion(question);
         AnswerMapper answerMapper = sqlSession.getMapper(AnswerMapper.class);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        AnswerAgreeMapper answerAgreeMapper = sqlSession.getMapper(AnswerAgreeMapper.class);
         for(Answer answer:question.getAnswerList()){
             answer.setQuestionID(question.getId());
             answerMapper.insertAnswer(answer);
+            User authorUser = new User(answer.getAuthor(),answer.getAuthorUrl());
+            userMapper.insert(authorUser);
+            List<User> voteUserList = answer.getAgreeUser();
+            for(User user:voteUserList){
+                userMapper.insert(user);
+                answerAgreeMapper.insert(new AnswerAgree(answer.getId(),user.getId()));
+            }
         }
         sqlSession.commit();
         sqlSession.close();

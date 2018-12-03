@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.wangning.mapper.UserMapper">
+    <select id="selectAll" resultType="xin.wangning.domain.User">
+        select * from user_tb
+    </select>
+
+    <insert id="insert" parameterType="xin.wangning.domain.User">
+        insert into user_tb(id,name,url) values (#{id},#{name},#{url})
+    </insert>
+</mapper>
