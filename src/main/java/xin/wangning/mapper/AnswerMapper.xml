@@ -16,7 +16,7 @@
         select * from answer_tb
     </select>
 
-    <insert id="insertAnswer" parameterType="xin.wangning.domain.Answer" useGeneratedKeys="true">
+    <insert id="insertAnswer" parameterType="xin.wangning.domain.Answer" useGeneratedKeys="true" keyProperty="id">
         insert into answer_tb(author,author_url,agree_num,content,question_id,discuss_num)values(#{author},#{authorUrl},#{agreeNum},#{content},#{questionID},#{discussNum})
     </insert>
 

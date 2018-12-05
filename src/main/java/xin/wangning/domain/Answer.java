@@ -1,5 +1,6 @@
 package xin.wangning.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Answer {
@@ -10,7 +11,7 @@ public class Answer {
     int agreeNum;
     String content;
     int discussNum;
-    List<User> agreeUser;
+    List<User> agreeUser = new ArrayList<>();
 
     public List<User> getAgreeUser() {
         return agreeUser;

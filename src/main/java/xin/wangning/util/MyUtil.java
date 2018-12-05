@@ -43,11 +43,23 @@ public class MyUtil {
             answer.setQuestionID(question.getId());
             answerMapper.insertAnswer(answer);
             User authorUser = new User(answer.getAuthor(),answer.getAuthorUrl());
-            userMapper.insert(authorUser);
+            User testExist = userMapper.selectByUrl(authorUser);
+            if(testExist==null){
+                userMapper.insert(authorUser);
+            }
             List<User> voteUserList = answer.getAgreeUser();
             for(User user:voteUserList){
-                userMapper.insert(user);
-                answerAgreeMapper.insert(new AnswerAgree(answer.getId(),user.getId()));
+                User user1 = userMapper.selectByUrl(user);
+                if(user1==null){
+                    userMapper.insert(user);
+                    answerAgreeMapper.insert(new AnswerAgree(answer.getId(),user.getId()));
+                }else {
+                    try {
+                        answerAgreeMapper.insert(new AnswerAgree(answer.getId(),user1.getId()));
+                    }catch (Exception e){
+                        //还没想明白，日后再改
+                    }
+                }
             }
         }
         sqlSession.commit();

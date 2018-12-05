@@ -70,6 +70,7 @@ public class Controller {
     //仅供初始化用
     public static ChromeDriver getWebDriver() {
         ChromeDriver webDriver = new ChromeDriver();
+        webDriver.manage().window().maximize();
         webDriver.get("https://www.baidu.com");
         return webDriver;
     }
@@ -127,10 +128,10 @@ public class Controller {
     }
 
     public static void crawl() {
-        driver.get("https://www.zhihu.com/topic/19631819/hot");
+        driver.get("https://www.zhihu.com/topic/19631819/newest");
 //        driver.get("https://www.zhihu.com/topic/19550901/hot");
 //        getAllQuestionShow(20);
-        List<String> urls = driverParser.getAllQuestionAndArticleUrl(10);
+        List<String> urls = driverParser.getAllQuestionAndArticleUrl(200);
         urlManager.addUrls(urls);
         String url;
         while (!(url = urlManager.getUrl()).equals("")) {

@@ -7,7 +7,11 @@
         select * from user_tb
     </select>
 
-    <insert id="insert" parameterType="xin.wangning.domain.User">
-        insert into user_tb(id,name,url) values (#{id},#{name},#{url})
+    <insert id="insert" parameterType="xin.wangning.domain.User"  useGeneratedKeys="true" keyProperty="id">
+        insert into user_tb(name,url) values (#{name},#{url})
     </insert>
+
+    <select id="selectByUrl" parameterType="xin.wangning.domain.User" resultType="xin.wangning.domain.User">
+        select * from user_tb where url = #{url}
+    </select>
 </mapper>

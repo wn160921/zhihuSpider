@@ -2,6 +2,9 @@ package xin.wangning.parser;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import xin.wangning.domain.Answer;
 import xin.wangning.domain.Question;
 import xin.wangning.domain.User;
@@ -75,7 +78,7 @@ public class DriverParser {
             }
         }
 
-        List<WebElement> listItemList = driver.findElementsByClassName("List-item");
+        List<WebElement> listItemList = driver.findElement(By.id("QuestionAnswers-answers")).findElements(By.className("List-item"));
         List<Answer> answers = new ArrayList<>();
         question.setAnswerList(answers);
         letAllAnswerShow();
@@ -85,7 +88,9 @@ public class DriverParser {
                 WebElement userInfoElem = e.findElement(By.cssSelector(".AuthorInfo.AnswerItem-authorInfo.AnswerItem-authorInfo--related"));
                 WebElement nameElem = userInfoElem.findElement(By.cssSelector("meta[itemprop$=name]"));
                 answer.setAuthor(nameElem.getAttribute("content"));
-
+                if(answer.getAuthor().equals("匿名用户")){
+                    continue;
+                }
                 WebElement urlElem = userInfoElem.findElement(By.cssSelector("meta[itemprop$=url]"));
                 answer.setAuthorUrl(urlElem.getAttribute("content"));
 
@@ -106,55 +111,74 @@ public class DriverParser {
                 }
 
                 //获取赞同信息
-                try {
-                    WebElement agreeShowBtn = e.findElement(By.cssSelector("Button.Button--plain"));
-                    agreeShowBtn.sendKeys(Keys.ENTER);
-                    List<WebElement> voteList = getAllAgreePeople(answer.getAgreeNum());
+                if (agreeNum > 0) {
+                    System.out.println("start click");
+                    WebElement agreeShowBtn = e.findElement(By.cssSelector(".AnswerItem-extraInfo .Voters .Button.Button--plain"));
+                    trueClick(agreeShowBtn);
+                    getAllAgreePeople(answer.getAgreeNum());
+                    WebElement voterContent = driver.findElement(By.className("VoterList-content"));
+                    List<WebElement> voteList = voterContent.findElements(By.cssSelector(".List-item"));
                     List<User> voteUserList = new ArrayList<>();
                     answer.setAgreeUser(voteUserList);
-                    for(WebElement voteElem:voteList){
-                        WebElement voteUserInfoElem = voteElem.findElement(By.className("UserLink-link"));
-                        String voteUserName = voteUserInfoElem.getText();
-                        String voteUserUrl = voteUserInfoElem.getAttribute("href");
-                        User voteUser = new User();
-                        voteUser.setName(voteUserName);
-                        voteUser.setUrl(voteUserUrl);
-                        voteUserList.add(voteUser);
+                    for (WebElement voteElem : voteList) {
+                        WebDriverWait webDriverWait = new WebDriverWait(driver, 10);
+                        try {
+                            webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".ContentItem-head a")));
+                            WebElement voteUserInfoElem = voteElem.findElement(By.cssSelector(".ContentItem-head a"));
+                            String voteUserName = voteUserInfoElem.getText();
+                            String voteUserUrl = voteUserInfoElem.getAttribute("href");
+                            User voteUser = new User();
+                            voteUser.setName(voteUserName);
+                            voteUser.setUrl(voteUserUrl);
+                            voteUserList.add(voteUser);
+                        }catch (Exception e4){
+                            System.out.println("userLink not found");
+                            continue;
+                        }
                     }
-
-                } catch (Exception e1) {
-                    e1.printStackTrace();
+                    WebElement closeElem = driver.findElement(By.cssSelector(".Button.Modal-closeButton.Button--plain"));
+                    trueClick(closeElem);
+                    System.out.println("has closed");
                 }
-
                 answers.add(answer);
             } catch (Exception e2) {
                 e2.printStackTrace();
-                continue;
             }
         }
 
         return question;
     }
 
-    private List<WebElement> getAllAgreePeople(int agreeNum) {
+    private void getAllAgreePeople(int agreeNum) {
+        WebDriverWait webDriverWait = new WebDriverWait(driver, 10);
+        webDriverWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".VoterList-content")));
         WebElement voterContent = driver.findElement(By.className("VoterList-content"));
         List<WebElement> voteList = voterContent.findElements(By.className("List-item"));
         int length = voteList.size();
-        while (length<agreeNum){
-            String jsDown = "window.scrollTo(0,document.body.scrollHeight);";
+        while (length < agreeNum) {
+//            String jsDown = "window.scrollTo(0,document.body.scrollHeight);";
             try {
-                ((JavascriptExecutor) driver).executeScript(jsDown);
-                Thread.sleep(500);
+                //body > div:nth-child(13) > div > span > div > div.Modal.Modal--fullPage > div > div > div > div.VoterList-content > div:nth-child(556)
+//                ((JavascriptExecutor) driver).executeScript(jsDown);
+                Actions actions = new Actions(driver);
                 voteList = driver.findElements(By.className("List-item"));
+                if (voteList.size() == 0) {
+                    Thread.sleep(500);
+                    continue;
+                }
+                actions.moveToElement(voteList.get(voteList.size() - 1)).perform();
+//                voterContent.sendKeys(Keys.ARROW_DOWN);
+                System.out.println("拉一次");
+                Thread.sleep(500);
                 length = voteList.size();
                 if (voteList.size() >= agreeNum) {
                     break;
                 }
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }
-        return voteList;
     }
 
 
@@ -204,7 +228,7 @@ public class DriverParser {
     private void letAllAnswerShow() {
         try {
             WebElement allAnswerElem = driver.findElement(By.cssSelector(".QuestionMainAction"));
-            allAnswerElem.sendKeys(Keys.ENTER);
+            trueClick(allAnswerElem);
             Thread.sleep(1000);
         } catch (Exception e) {
             //e.printStackTrace();
@@ -213,8 +237,8 @@ public class DriverParser {
             String jsDown = "window.scrollTo(0,document.body.scrollHeight);";
             String jsUp = "window.scrollTo(0,0);";
             try {
-                ((JavascriptExecutor) driver).executeScript(jsUp);
-                ((JavascriptExecutor) driver).executeScript(jsDown);
+                driver.executeScript(jsUp);
+                driver.executeScript(jsDown);
                 Thread.sleep(1000);
                 List<WebElement> elements = driver.findElements(By.cssSelector(".Button.QuestionAnswers-answerButton.Button--blue.Button--spread"));
                 if (elements.size() > 0) {
@@ -223,6 +247,19 @@ public class DriverParser {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void trueClick(WebElement element) {
+        element.sendKeys(Keys.ARROW_UP);
+        System.out.println(element.getText());
+        Actions actions = new Actions(driver);
+//        driver.executeScript("arguments[0].scrollIntoView(true);",element);
+        actions.moveToElement(element).click(element).perform();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
